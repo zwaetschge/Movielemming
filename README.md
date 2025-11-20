@@ -14,10 +14,10 @@ A web-based application to identify, compare, and delete duplicate movie files o
 ## Tech Stack
 
 - **Backend**: Python 3.11 + FastAPI
-- **Frontend**: React + Vite + Tailwind CSS (to be implemented)
+- **Frontend**: React 18 + Vite + Tailwind CSS
 - **Media Processing**: FFmpeg + FFprobe
 - **Database**: SQLite
-- **Deployment**: Docker
+- **Deployment**: Docker with multi-stage build
 
 ## Project Structure
 
@@ -37,7 +37,20 @@ Movielemming/
 │   │   └── main.py                # FastAPI application
 │   ├── requirements.txt
 │   └── tests/
-├── frontend/                       # React app (Phase 3)
+├── frontend/
+│   ├── src/
+│   │   ├── components/            # React components
+│   │   │   ├── Dashboard.jsx      # Main list view
+│   │   │   ├── ComparisonModal.jsx # File comparison
+│   │   │   ├── FileCard.jsx       # Individual file display
+│   │   │   ├── ScanProgress.jsx   # Progress indicator
+│   │   │   └── DeleteConfirmation.jsx # Deletion workflow
+│   │   ├── services/
+│   │   │   └── api.js             # API client
+│   │   ├── App.jsx                # Main app component
+│   │   └── main.jsx               # Entry point
+│   ├── package.json
+│   └── vite.config.js
 ├── public/
 │   └── thumbnails/                 # Generated thumbnails
 ├── data/                           # SQLite database location
@@ -150,11 +163,13 @@ MAX_CONCURRENT_THUMBNAILS=2
 2. Generates thumbnails at 25% of video duration using FFmpeg
 3. Stores results in SQLite database for caching
 
-### Phase 3: User Interface (To Be Implemented)
-1. Dashboard shows duplicate movie groups
-2. Comparison view displays side-by-side file information
-3. Toggle files to KEEP or DELETE
-4. Process deletion with space reclaimed summary
+### Phase 3: User Interface
+1. Dashboard shows duplicate movie groups with statistics
+2. Comparison modal displays side-by-side file information with thumbnails
+3. Toggle files to KEEP or DELETE with smart defaults
+4. Three-step deletion workflow with dry-run safety check
+5. Real-time scan progress monitoring
+6. Responsive design for desktop and mobile
 
 ## API Usage Examples
 
@@ -255,9 +270,9 @@ Response:
 
 - ✅ Phase 1: Backend scaffold, scanner, metadata extraction
 - ✅ Phase 2: FFmpeg thumbnail generation, API endpoints
-- ⏳ Phase 3: React frontend (Dashboard + Comparison UI)
-- ⏳ Phase 4: Delete functionality with safety checks
-- ⏳ Phase 5: Docker containerization
+- ✅ Phase 3: React frontend (Dashboard + Comparison UI)
+- ✅ Phase 4: Delete functionality with safety checks (dry-run mode)
+- ✅ Phase 5: Docker containerization with multi-stage build
 
 ## Contributing
 

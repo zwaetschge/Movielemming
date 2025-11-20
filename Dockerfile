@@ -1,17 +1,17 @@
 # MediaCleaner Dockerfile
 # Multi-stage build for optimal image size
 
-# Stage 1: Frontend build (placeholder for Phase 3)
+# Stage 1: Frontend build
 FROM node:18-alpine AS frontend-builder
 WORKDIR /frontend
 
 # Copy frontend package files
-# COPY frontend/package*.json ./
-# RUN npm ci
+COPY frontend/package*.json ./
+RUN npm ci
 
 # Copy frontend source and build
-# COPY frontend/ ./
-# RUN npm run build
+COPY frontend/ ./
+RUN npm run build
 
 # Stage 2: Python backend
 FROM python:3.11-slim
@@ -37,8 +37,8 @@ COPY backend/app ./app
 # Create necessary directories
 RUN mkdir -p /app/data /app/public/thumbnails /data
 
-# Copy frontend build (when available)
-# COPY --from=frontend-builder /frontend/dist /app/frontend/dist
+# Copy frontend build
+COPY --from=frontend-builder /frontend/dist /app/frontend/dist
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1

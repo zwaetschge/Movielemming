@@ -40,19 +40,29 @@ docker-compose up -d
 
 Open your browser to: `http://localhost:8000`
 
-- API Documentation: `http://localhost:8000/docs`
-- Interactive API: `http://localhost:8000/redoc`
+You'll see the MediaCleaner web interface!
+
+- **Web UI**: `http://localhost:8000` (Main interface)
+- **API Documentation**: `http://localhost:8000/docs` (For developers)
+- **Interactive API**: `http://localhost:8000/redoc` (Alternative API docs)
 
 ### 5. Run Your First Scan
 
-#### Option A: Using the API Docs (Easy!)
+#### Option A: Using the Web UI (Easiest!)
+
+1. Click the **"Start New Scan"** button in the top-right corner
+2. Watch the progress bar as the scan runs
+3. Browse the duplicate groups when complete
+4. Click on any group to compare files
+
+#### Option B: Using the API Docs
 
 1. Go to `http://localhost:8000/docs`
 2. Click on `POST /api/scan`
 3. Click "Try it out" → "Execute"
 4. Note the `job_id` returned
 
-#### Option B: Using curl
+#### Option C: Using curl
 
 ```bash
 # Start a scan
@@ -264,11 +274,18 @@ ports:
 
 ## What's Next?
 
-- ⏳ React frontend UI (Phase 3) - coming soon!
-- ⏳ Batch operations with visual selection
-- ⏳ Automatic quality recommendations
+The full web interface is now available! You can:
 
-For now, use the API directly through the `/docs` interface or curl commands.
+- ✅ Browse duplicate groups in the dashboard
+- ✅ Compare files side-by-side with thumbnails
+- ✅ Select files to keep or delete
+- ✅ Use dry-run mode to safely test deletions
+- ✅ Monitor scan progress in real-time
+
+Future enhancements:
+- Automatic quality recommendations based on bitrate/resolution
+- Bulk operations across multiple folders
+- Advanced filtering and sorting options
 
 ## Support
 
