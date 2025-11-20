@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  mediacleaner:
+    build: .
+    container_name: mediacleaner
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount your movie library (CHANGE THIS PATH)
+      - /mnt/user/movies:/data:ro  # :ro for read-only to prevent accidental modifications
+      # For testing/development, remove :ro to allow deletions
+      # - /mnt/user/movies:/data
+
+      # Persistent database and thumbnails
+      - ./data:/app/data
+      - ./public/thumbnails:/app/public/thumbnails
+
+      # Optional: Mount .env file for configuration
+      # - ./backend/.env:/app/.env
+
+    environment:
+      # Override settings here or use .env file
+      - DATA_DIR=/data
+      - THUMBNAIL_DIR=/app/public/thumbnails
+      - DATABASE_PATH=/app/data/mediacleaner.db
+      - MIN_FILE_SIZE_MB=300
+      - MAX_CONCURRENT_SCANS=4
+      - MAX_CONCURRENT_THUMBNAILS=2
+      - DEBUG=false
+
+    # Resource limits (adjust based on your server)
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Network mode for Unraid
+    # network_mode: bridge
+
+# Optional: Create named volumes for better management
+volumes:
+  mediacleaner_data:
+  mediacleaner_thumbnails:
+
+# To use named volumes, replace the volume mounts above with:
+# volumes:
+#   - /mnt/user/movies:/data:ro
+#   - mediacleaner_data:/app/data
+#   - mediacleaner_thumbnails:/app/public/thumbnails
