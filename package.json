@@ -1,0 +1,1 @@
+{"name":"cinema-constellation","private":true,"version":"1.0.0","scripts":{"serve":"python3 -m http.server 4173 -d public","test":"playwright test"},"devDependencies":{"@playwright/test":"^1.52.0"}}
